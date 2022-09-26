@@ -19,7 +19,7 @@ public class GetUserByNameTest {
 
         UserApi userApi = new UserApi();
 
-        userApi.getUserByName(username)
+        userApi.OLDgetUserByName(username)
                 .statusCode(200)
                 .body("username",equalTo(username));
     }
@@ -42,7 +42,7 @@ public class GetUserByNameTest {
 
         UserApi userApi = new UserApi();
 
-        userApi.getUserByName(username)
+        userApi.OLDgetUserByName(username)
                 .statusCode(404)
                 .body("code",equalTo(1))
                 .body("type",equalTo("error"))

@@ -1,6 +1,7 @@
 
 package dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +10,28 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class UserNew {
-
-    private String email;
-    private String firstName;
+    @JsonProperty("id")
     private Long id;
-    private String lastName;
-    private String password;
-    private String phone;
-    private Long userStatus;
+
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @JsonProperty("lastName")
+    private String lastName;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("phone")
+    private String phone;
+
+    @JsonProperty("userStatus")
+    private Long userStatus;
 }
+

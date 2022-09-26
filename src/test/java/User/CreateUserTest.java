@@ -26,7 +26,6 @@ public class CreateUserTest {
                 .id(122L)
                 .firstName("firstName")
                 .password("password")
-                .password("password")
                 .username("username")
                 .phone("phone")
                 .build();
