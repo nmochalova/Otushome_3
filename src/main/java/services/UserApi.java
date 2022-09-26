@@ -10,9 +10,9 @@ import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 
 public class UserApi {
-    public static final String BASE_URL = "https://petstore.swagger.io/v2";
-    public static final String USER_PATH = "/user";
-    public static final String GET_USER_PATH = "/user/{username}";
+    private String BASE_URL = "https://petstore.swagger.io/v2";
+    private String USER_PATH = "/user";
+    private String GET_USER_PATH = "/user/{username}";
 
     private RequestSpecification reqSpec;
     private ResponseSpecification respSpec;
