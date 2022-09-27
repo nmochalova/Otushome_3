@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import services.UserApi;
 
-public class PositiveUserTests {
+public class PositiveUserTest {
     /** TestCase 1: Создание пользователя
      * Шаги:
      * 1. Создаем пользователя

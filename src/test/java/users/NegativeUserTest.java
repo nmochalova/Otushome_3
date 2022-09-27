@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import services.UserApi;
 
-public class NegativeUserTests {
+public class NegativeUserTest {
     /**
      * TestCase 1: Запросить юзера по имени, которого нет в системе
      *
