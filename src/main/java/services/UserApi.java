@@ -12,16 +12,16 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UserApi {
-    private String BASE_URL =  System.getProperty("base.url","https://petstore.swagger.io/v2");
-    private String USER_PATH = "/user";
-    private String GET_USER_PATH = "/user/{username}";
+    private String baseUrl =  System.getProperty("base.url","https://petstore.swagger.io/v2");
+    private String userPath = "/user";
+    private String getUserPath = "/user/{username}";
 
     private RequestSpecification reqSpec;
     private ResponseSpecification respSpec;
 
     public UserApi() {
         reqSpec = given()
-                .baseUri(BASE_URL)
+                .baseUri(baseUrl)
                 .contentType(ContentType.JSON);
         respSpec = expect()
                 .statusCode(200);
@@ -41,7 +41,7 @@ public class UserApi {
 
 
         given(reqSpec)
-                .basePath(USER_PATH)
+                .basePath(userPath)
                 .body(user)
                 .log().all()
                 .expect()
@@ -59,7 +59,7 @@ public class UserApi {
                 .given(reqSpec)
                 .log().all()
                 .when()
-                .get(GET_USER_PATH,username)
+                .get(getUserPath,username)
                 .andReturn();
 
         response.prettyPrint();
@@ -72,7 +72,7 @@ public class UserApi {
                 .given(reqSpec)
                 .log().all()
                 .when()
-                .delete(GET_USER_PATH,name)
+                .delete(getUserPath,name)
                 .andReturn();
 
         response.prettyPrint();
