@@ -4,7 +4,6 @@ import dto.UserNew;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
@@ -13,7 +12,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UserApi {
-    private String BASE_URL = "https://petstore.swagger.io/v2";
+    private String BASE_URL =  System.getProperty("base.url","https://petstore.swagger.io/v2");
     private String USER_PATH = "/user";
     private String GET_USER_PATH = "/user/{username}";
 
@@ -26,28 +25,6 @@ public class UserApi {
                 .contentType(ContentType.JSON);
         respSpec = expect()
                 .statusCode(200);
-    }
-
-    public ValidatableResponse crateUser(UserNew user) {
-        return given(reqSpec)
-                .basePath(USER_PATH)
-                .body(user)
-                .log().all()
-                .expect()
-                .spec(respSpec)
-              .when()
-                .post()
-              .then()
-                .log().all();
-    }
-
-    public ValidatableResponse OLDgetUserByName(String username) {
-        return given(reqSpec)
-                .log().all()
-                .when()
-                .get(GET_USER_PATH,username)
-                .then()
-                .log().all();
     }
 
     public void createUser(Long id, String username) {
@@ -83,6 +60,19 @@ public class UserApi {
                 .log().all()
                 .when()
                 .get(GET_USER_PATH,username)
+                .andReturn();
+
+        response.prettyPrint();
+
+        return response.getStatusCode();
+    }
+
+    public int deleteUser(String name) {
+        Response response = RestAssured
+                .given(reqSpec)
+                .log().all()
+                .when()
+                .delete(GET_USER_PATH,name)
                 .andReturn();
 
         response.prettyPrint();

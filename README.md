@@ -4,8 +4,6 @@
 **Цель:**
 Написать автотесты с использованием Rest-assured.
 
-Тест-кейсы описаны в файле [TestCases.xlsx](https://github.com/nmochalova/Otushome_3/blob/main/TestCases.xlsx)
-
 Тестируемые методы расположены по адресу: https://petstore.swagger.io/
 
 *Дополнительные материалы:*
