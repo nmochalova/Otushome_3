@@ -1,83 +1,70 @@
 package services;
 
-import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasKey;
 
-import dto.UserNew;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-
 
 public class UserApi {
-  private String baseUrl =  System.getProperty("base.url","https://petstore.swagger.io/v2");
-  private String userPath = "/user";
-  private String getUserPath = "/user/{username}";
+  private String baseUrl =  System.getProperty("wiremock.hostname","http://localhost:9190");
+  private String scorePath = "/user/get/{id}";
+  private String userPath = "/user/get/all";
+  private String coursePath = "/cource/get/all";
 
   private RequestSpecification reqSpec;
-  private ResponseSpecification respSpec;
-
   public UserApi() {
     reqSpec = given()
             .baseUri(baseUrl)
             .contentType(ContentType.JSON);
-    respSpec = expect()
-            .statusCode(200);
   }
 
-  public void createUser(Long id, String username) {
-    UserNew user = UserNew.builder()
-            .id(id)
-            .username(username)
-            .firstName("firstName"+id)
-            .lastName("secondName"+id)
-            .email("test"+id+"@tr.ru")
-            .password("password")
-            .phone("phone"+id)
-            .userStatus(0L)
-            .build();
-
-
-    given(reqSpec)
-            .basePath(userPath)
-            .body(user)
+  public Response getScore(String id) {
+    Response response = RestAssured
+            .given(reqSpec)
             .log().all()
-            .expect()
-            .spec(respSpec)
             .when()
-            .post()
+            .get(scorePath,id)
+            .andReturn();
+
+    response.prettyPrint();
+
+    return response;
+  }
+  public ValidatableResponse getListUser() {
+    return given(reqSpec)
+            .basePath(userPath)
+            .log().all()
+            .when()
+            .get()
             .then()
-            .body("type",equalTo("unknown"))
-            .body("message",equalTo(String.valueOf(id)))
+            .statusCode(200)
             .log().all();
   }
 
-  public int getUserByName(String username) {
-    Response response = RestAssured
-            .given(reqSpec)
+  public ValidatableResponse getListCourse() {
+    return given(reqSpec)
+            .basePath(coursePath)
             .log().all()
             .when()
-            .get(getUserPath,username)
-            .andReturn();
-
-    response.prettyPrint();
-
-    return response.getStatusCode();
+            .get()
+            .then()
+            .statusCode(200)
+            .log().all();
   }
 
-  public int deleteUser(String name) {
-    Response response = RestAssured
-            .given(reqSpec)
-            .log().all()
-            .when()
-            .delete(getUserPath,name)
-            .andReturn();
+  //Метод, который проверяет наличие поля name и возвращает его значение
+  public String getIntFromJson(Response response, String name) {
+    response
+            .then()
+            .assertThat()
+            .defaultParser(Parser.JSON)
+            .body("$",hasKey(name)); //$ - ищем поле в корне json
 
-    response.prettyPrint();
-
-    return response.getStatusCode();
+    return response.jsonPath().getString(name);
   }
 }

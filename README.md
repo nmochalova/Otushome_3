@@ -1,13 +1,51 @@
 # OtusHomework_3
-**Домашнее задание:** Rest-assured
+**Домашнее задание:** Rest-assured и WireMock
 
 **Цель:**
-Написать автотесты с использованием Rest-assured.
+Написать автотесты с использованием Rest-assured и WireMock.
 
-Тестируемые методы расположены по адресу: https://petstore.swagger.io/
+**Инструкция выполнения домашнего задания:**
+Необходимо реализовать Stub сервер на Wiremock со следующими endpoint'ами:
+- /user/get/{id} для получение оценки пользователя
+- /cource/get/all для получения списка курсов
+- /user/get/all - для получения списка всех пользователей
 
-*Дополнительные материалы:*
+**Контракты**
 
-- [Grovy's GPath](https://www.javadoc.io/doc/io.rest-assured/json-path/3.0.0/io/restassured/path/json/JsonPath.html)
-- [Онлайн конвертор JSON from JSON Scheme](https://www.liquid-technologies.com/online-json-to-schema-converter)
-- [Документация по Hamcrest](https://hamcrest.org/JavaHamcrest/tutorial)
+- Для user
+
+{
+"name":"Test user",
+"cource":"QA",
+"email":"test@test.test"
+"age": 23
+}
+
+
+- Для оценки:
+
+{
+"name":"Test user",
+"score": 78
+}
+
+
+- Для курсов:
+
+[
+{
+"name":"QA java",
+"price": 15000
+},
+{
+"name":"Java",
+"price": 12000
+}
+]
+
+
+Подключить stub frontend, написать тесты для проверки json cхем.
+
+Вышеуказанные задачи можно реализовать с помощью Citrus Framework.
+По http запросам можно применить RestAssured, Retrofit или Citrus (на ваше усмотрение).
+Для заглушек можно использовать Wiremock или Citrus Framework (на ваше усмотрение).
