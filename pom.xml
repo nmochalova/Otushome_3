@@ -13,6 +13,9 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <base.url>https://petstore.swagger.io/v2</base.url>
+        <surefire.plugin.version>2.22.2</surefire.plugin.version>
+        <thread.count>5</thread.count>
+        <fork.count>0</fork.count>
     </properties>
 
     <dependencies>
@@ -74,8 +77,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <parallel>classes</parallel>
+                    <threadCount>${thread.count}</threadCount>
+                    <forkCount>${fork.count}</forkCount>
+                    <trimStackTrace>false</trimStackTrace>
                     <systemProperties>
                         <base.url>${base.url}</base.url>
                         <wiremock.hostname>http://localhost:9190</wiremock.hostname>
