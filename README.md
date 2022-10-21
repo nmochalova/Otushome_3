@@ -10,7 +10,7 @@
 - /cource/get/all для получения списка курсов
 - /user/get/all - для получения списка всех пользователей
 
-Перед запуском тестов необходимо стартануть [WireMock в docker](![img_2.png](img_2.png)):
+Перед запуском тестов необходимо стартануть [WireMock в docker](https://hub.docker.com/r/wiremock/wiremock):
 
 ````docker run -d -p 9190:8080 wiremock/wiremock --verbose````
 
