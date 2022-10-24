@@ -6,9 +6,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import dto.Course;
 import dto.User;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -28,23 +29,29 @@ public class Homework_Test {
     new CourseStub();
   }
 
-  private static WebDriver driver;
+  private WebDriver driver;
 
-  @BeforeAll
-  public static void startWireMock() throws MalformedURLException {
+  @BeforeClass
+  public static void startWireMock() {
+    configureFor(9190);
+  }
+
+  @Before
+  public void init() throws MalformedURLException {
     configureFor(9190);
 
     DesiredCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability("browserName","chrome");
     capabilities.setCapability("browserVersion","104.0");
+    capabilities.setCapability("enableVNC",true);
     driver = new RemoteWebDriver(
             URI.create("http://127.0.0.1:4445/wd/hub").toURL(),
             capabilities
     );
   }
 
-  @AfterAll
-  public static void tearDown(){
+  @After
+  public void tearDown(){
     if(driver != null) {
       driver.close();
       driver.quit();

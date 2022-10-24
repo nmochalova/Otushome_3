@@ -5,29 +5,44 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>petStore</artifactId>
+    <artifactId>parallel</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <selenium.java.version>3.141.59</selenium.java.version>
+
+        <lombok.version>1.18.24</lombok.version>
+        <restassured.version>5.0.1</restassured.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <base.url>https://petstore.swagger.io/v2</base.url>
+
+        <forkCount>1</forkCount>
+        <reuseForks>true</reuseForks>
+        <parallel>all</parallel>
+        <perCoreThreadCount>false</perCoreThreadCount>
+        <useUnlimitedThreads>true</useUnlimitedThreads>
+        <thread.count>3</thread.count>
+
+        <browser>chrome</browser>
+        <webdriver.base.url>http://0.0.0.0:9999</webdriver.base.url>
+        <test.project.language>RU</test.project.language>
+
+        <webdriver.timeouts.implicitlywait>5000</webdriver.timeouts.implicitlywait>
+
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
-        <thread.count>5</thread.count>
-        <fork.count>0</fork.count>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>4.5.2</version>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.java.version}</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.0.1</version>
+            <version>${restassured.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -35,21 +50,14 @@
             <version>1.9.13</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>5.8.1</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -84,28 +92,34 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
-                    <parallel>classes</parallel>
-                    <threadCount>${thread.count}</threadCount>
-                    <forkCount>${fork.count}</forkCount>
-                    <trimStackTrace>false</trimStackTrace>
-                    <systemProperties>
-                        <base.url>${base.url}</base.url>
+                    <forkCount>${forkCount}</forkCount>
+                    <reuseForks>${reuseForks}</reuseForks>
+                    <parallel>${parallel}</parallel>
+                    <perCoreThreadCount>${perCoreThreadCount}</perCoreThreadCount>
+                    <useUnlimitedThreads>${useUnlimitedThreads}</useUnlimitedThreads>
+                    <threadCountMethods>${thread.count}</threadCountMethods>
+                    <systemPropertyVariables>
+                        <browser>${browser}</browser>
+                        <webdriver.timeouts.implicitlywait>${webdriver.timeouts.implicitlywait}
+                        </webdriver.timeouts.implicitlywait>
+                        <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
+                        <test.project.status>test</test.project.status>
+                        <test.project.language>${test.project.language}</test.project.language>
                         <wiremock.hostname>http://localhost:9190</wiremock.hostname>
-                    </systemProperties>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-
-                <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.0</version>
