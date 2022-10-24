@@ -1,4 +1,4 @@
-# OtusHomework_3
+# OtusHomework_4
 **Домашнее задание:** 
 Необходимо подключить Selenoid и перенести существующие тесты на использование Selenoid.
 
@@ -37,7 +37,7 @@ docker restart selenoid_1
 Перед запуском Selenoid необходимо произвести следующие настройки:
 - создать сеть
 ````
-- docker network create selenoid_1
+docker network create selenoid_1
 ````
 ````
 network docker ls
