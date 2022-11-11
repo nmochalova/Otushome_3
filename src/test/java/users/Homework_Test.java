@@ -45,7 +45,7 @@ public class Homework_Test {
     capabilities.setCapability("browserVersion","104.0");
     capabilities.setCapability("enableVNC",true);
     driver = new RemoteWebDriver(
-            URI.create("http://127.0.0.1:4445/wd/hub").toURL(),
+            URI.create("http://127.0.0.1/wd/hub").toURL(),
             capabilities
     );
   }
@@ -104,5 +104,4 @@ public class Homework_Test {
 
     //SOME STEPS...
   }
-
 }
